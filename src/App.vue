@@ -1,34 +1,21 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-
-const { t, locale } = useI18n()
-
-function toggleLang() {
-  const newLang = locale.value === 'es' ? 'en' : 'es'
-  locale.value = newLang
-  localStorage.setItem('lang', newLang)
-}
+import NavBar from "./components/NavBar.vue";
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-900 text-white">
-    <header class="flex items-center justify-between p-6">
-      <h1 class="text-xl font-bold">Portfolio</h1>
-      <button
-        class="cursor-pointer rounded bg-white/10 px-4 py-2 text-sm hover:bg-white/20"
-        @click="toggleLang"
-      >
-        {{ locale === 'es' ? 'EN' : 'ES' }}
-      </button>
-    </header>
+  <div class="min-h-screen bg-bg-primary text-text-primary">
+    <NavBar />
 
-    <main class="mx-auto max-w-4xl px-6">
+    <main class="mx-auto max-w-5xl px-6 pt-24">
       <section class="flex min-h-[70vh] flex-col justify-center">
-        <p class="text-lg text-gray-400">{{ t('hero.greeting') }}</p>
-        <h2 class="mt-2 text-5xl font-bold">Karlos</h2>
-        <p class="mt-2 text-2xl text-blue-400">{{ t('hero.role') }}</p>
-        <p class="mt-4 max-w-lg text-gray-300">{{ t('hero.description') }}</p>
+        <p class="text-lg text-text-secondary">Hola, soy</p>
+        <h2 class="mt-2 text-5xl font-bold text-brand-main">Karlos</h2>
+        <p class="mt-2 text-2xl text-brand-accent">Desarrollador Full Stack</p>
+        <p class="mt-4 max-w-lg text-text-secondary">
+          Construyo aplicaciones web modernas con Vue, TypeScript y más.
+        </p>
       </section>
+      <div class="h-300 bg-red-500">hasd</div>
     </main>
   </div>
 </template>

@@ -14,6 +14,7 @@
   --color-bg-secondary: var(--bg-secondary);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-border-color: var(--border-color);
 }
 
 :root {
