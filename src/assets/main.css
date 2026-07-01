@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+@theme {
+  --color-green: #1c3d31;
+  --color-green-light: #2a5a49;
+  --color-gold: #d4af37;
+  --color-gold-bright: #e8c65b;
+  --color-brown: #4a3525;
+  --color-black: #1a1a1a;
+  --color-white: #fdfbf7;
+  --color-brand-main: var(--brand-main);
+  --color-brand-accent: var(--brand-accent);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+}
+
+:root {
+  --color-green: #1c3d31;
+  --color-green-light: #2a5a49;
+  --color-gold: #d4af37;
+  --color-gold-bright: #e8c65b;
+  --color-brown: #4a3525;
+  --color-black: #1a1a1a;
+  --color-white: #fdfbf7;
+
+  --bg-primary: var(--color-white);
+  --bg-secondary: #f0eee9;
+  --text-primary: var(--color-black);
+  --text-secondary: var(--color-brown);
+
+  --brand-main: var(--color-green);
+  --brand-accent: var(--color-gold);
+  --border-color: #e2dfd5;
+}
+
+[data-theme="dark"] {
+  --bg-primary: var(--color-black);
+  --bg-secondary: var(--color-green);
+  --text-primary: var(--color-white);
+  --text-secondary: #d1d1d1;
+
+  --brand-main: var(--color-green-light);
+  --brand-accent: var(--color-gold-bright);
+  --border-color: #333333;
+}
