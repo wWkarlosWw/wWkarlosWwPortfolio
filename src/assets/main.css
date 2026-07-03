@@ -1,6 +1,36 @@
 @import "tailwindcss";
 
-@theme {
+:root {
+  --background: #fdfbf7;
+  --foreground: #1a1a1a;
+  --card: #f5f2ec;
+  --card-foreground: #1a1a1a;
+  --popover: #fdfbf7;
+  --popover-foreground: #1a1a1a;
+  --primary: #1c3d31;
+  --primary-foreground: #fdfbf7;
+  --secondary: #e8e4da;
+  --secondary-foreground: #1c3d31;
+  --muted: #eceae4;
+  --muted-foreground: #6b5d4f;
+  --accent: #d4af37;
+  --accent-foreground: #1a1a1a;
+  --destructive: #c0392b;
+  --destructive-foreground: #fdfbf7;
+  --border: rgba(28, 61, 49, 0.15);
+  --input: transparent;
+  --input-background: #f0ede5;
+  --ring: #d4af37;
+  --radius: 0.25rem;
+
+  --bg-primary: var(--background);
+  --bg-secondary: var(--secondary);
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --brand-main: var(--primary);
+  --brand-accent: var(--accent);
+  --border-color: var(--border);
+
   --color-green: #1c3d31;
   --color-green-light: #2a5a49;
   --color-gold: #d4af37;
@@ -8,6 +38,66 @@
   --color-brown: #4a3525;
   --color-black: #1a1a1a;
   --color-white: #fdfbf7;
+}
+
+[data-theme="dark"] {
+  --background: #0f1f18;
+  --foreground: #fdfbf7;
+  --card: #1c3d31;
+  --card-foreground: #fdfbf7;
+  --popover: #152b22;
+  --popover-foreground: #fdfbf7;
+  --primary: #e8c65b;
+  --primary-foreground: #0f1f18;
+  --secondary: #1c3d31;
+  --secondary-foreground: #fdfbf7;
+  --muted: #1a2f24;
+  --muted-foreground: #a89880;
+  --accent: #e8c65b;
+  --accent-foreground: #0f1f18;
+  --destructive: #c0392b;
+  --destructive-foreground: #fdfbf7;
+  --border: rgba(212, 175, 55, 0.18);
+  --input: rgba(255, 255, 255, 0.05);
+  --input-background: #1c3d31;
+  --ring: #e8c65b;
+  --radius: 0.25rem;
+
+  --bg-primary: var(--background);
+  --bg-secondary: var(--secondary);
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --brand-main: var(--primary);
+  --brand-accent: var(--accent);
+  --border-color: var(--border);
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+
   --color-brand-main: var(--brand-main);
   --color-brand-accent: var(--brand-accent);
   --color-bg-primary: var(--bg-primary);
@@ -15,9 +105,6 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-border-color: var(--border-color);
-}
-
-:root {
   --color-green: #1c3d31;
   --color-green-light: #2a5a49;
   --color-gold: #d4af37;
@@ -25,24 +112,36 @@
   --color-brown: #4a3525;
   --color-black: #1a1a1a;
   --color-white: #fdfbf7;
-
-  --bg-primary: var(--color-white);
-  --bg-secondary: #f0eee9;
-  --text-primary: var(--color-black);
-  --text-secondary: var(--color-brown);
-
-  --brand-main: var(--color-green);
-  --brand-accent: var(--color-gold);
-  --border-color: #e2dfd5;
 }
 
-[data-theme="dark"] {
-  --bg-primary: var(--color-black);
-  --bg-secondary: var(--color-green);
-  --text-primary: var(--color-white);
-  --text-secondary: #d1d1d1;
+@layer base {
+  * {
+    border-color: var(--border);
+  }
 
-  --brand-main: var(--color-green-light);
-  --brand-accent: var(--color-gold-bright);
-  --border-color: #333333;
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
 }

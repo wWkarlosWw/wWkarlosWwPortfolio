@@ -1,54 +1,58 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
-import { useI18n } from "vue-i18n";
-import { Sun, Moon, Languages } from "@lucide/vue";
-import woodBg from "@/assets/img/navMadera.jpg";
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { Sun, Moon, Languages } from '@lucide/vue'
+import { useThemeStore } from '@/stores/theme'
+import { useLocale } from '@/composables/useLocale'
+import woodBg from '@/assets/img/navMadera.jpg'
 
-const { t, locale } = useI18n();
+const { t } = useI18n()
+const theme = useThemeStore()
+const locale = useLocale()
 
-const isDark = ref(true);
-const scrolled = ref(false);
+const router = useRouter()
+const route = useRoute()
+
+const scrolled = ref(false)
+const mobileMenuOpen = ref(false)
+
+const navItems = ['home', 'about', 'projects', 'contact'] as const
 
 function onScroll() {
-  scrolled.value = window.scrollY > 80;
+  scrolled.value = window.scrollY > 80
+}
+
+function navigateTo(name: string) {
+  const sectionId = name === 'home' ? 'hero' : `${name}-section`
+  const el = document.getElementById(sectionId)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+    router.push({ name, hash: `#${sectionId}` }).catch(() => {})
+  } else {
+    router.push({ name })
+  }
+  mobileMenuOpen.value = false
 }
 
 onMounted(() => {
-  const savedTheme = localStorage.getItem("theme");
-  isDark.value = savedTheme ? savedTheme === "dark" : true;
-  document.documentElement.setAttribute(
-    "data-theme",
-    isDark.value ? "dark" : "light",
-  );
-  window.addEventListener("scroll", onScroll, { passive: true });
-});
+  theme.init()
+  locale.init()
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", onScroll);
-});
-
-function toggleTheme() {
-  isDark.value = !isDark.value;
-  document.documentElement.setAttribute(
-    "data-theme",
-    isDark.value ? "dark" : "light",
-  );
-  localStorage.setItem("theme", isDark.value ? "dark" : "light");
-}
-
-function toggleLang() {
-  const newLang = locale.value === "es" ? "en" : "es";
-  locale.value = newLang;
-  localStorage.setItem("lang", newLang);
-}
+  window.removeEventListener('scroll', onScroll)
+})
 
 const woodGlassStyle = {
   background: `linear-gradient(rgba(40, 25, 15, 0.25), rgba(40, 25, 15, 0.25)), url(${woodBg}) center / 95% auto no-repeat`,
-  backgroundColor: "#4a3525",
-  backdropFilter: "blur(12px)",
-  WebkitBackdropFilter: "blur(12px)",
-};
+  backgroundColor: '#4a3525',
+  backdropFilter: 'blur(12px)',
+  WebkitBackdropFilter: 'blur(12px)',
+}
 </script>
+
 <template>
   <nav
     class="fixed left-1/2 top-4 z-50 w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 rounded-full transition-all duration-500 ease-out"
@@ -60,27 +64,30 @@ const woodGlassStyle = {
     />
     <div class="relative z-10 flex items-center justify-between gap-6 px-6 py-3">
       <a
-        href="#"
+        href="/"
         class="text-lg font-semibold tracking-tight transition-colors duration-300"
         :class="scrolled ? 'text-white font-bold' : 'text-text-primary'"
+        @click.prevent="navigateTo('home')"
       >
         &lt;Karlos /&gt;
       </a>
 
       <div class="hidden items-center gap-6 sm:flex">
-        <a
-          v-for="item in ['home', 'about', 'projects', 'contact'] as const"
+        <button
+          v-for="item in navItems"
           :key="item"
-          href="#"
           class="text-sm font-medium transition-colors duration-300"
-          :class="
-            scrolled
-              ? 'text-white/80 font-semibold hover:text-gold-bright'
-              : 'text-text-secondary hover:text-text-primary'
-          "
+          :class="[
+            route.name === item
+              ? 'text-gold-bright font-semibold'
+              : scrolled
+                ? 'text-white/80 hover:text-gold-bright'
+                : 'text-text-secondary hover:text-text-primary',
+          ]"
+          @click="navigateTo(item)"
         >
           {{ t(`nav.${item}`) }}
-        </a>
+        </button>
       </div>
 
       <div class="flex items-center gap-2">
@@ -91,10 +98,10 @@ const woodGlassStyle = {
               ? 'text-white/80 hover:bg-white/10 hover:text-gold-bright'
               : 'text-text-secondary hover:bg-black/5 hover:text-text-primary'
           "
-          @click="toggleTheme"
-          :title="isDark ? 'Light mode' : 'Dark mode'"
+          @click="theme.toggle()"
+          :title="theme.isDark ? 'Light mode' : 'Dark mode'"
         >
-          <Sun v-if="isDark" :size="16" />
+          <Sun v-if="theme.isDark" :size="16" />
           <Moon v-else :size="16" />
         </button>
 
@@ -105,8 +112,8 @@ const woodGlassStyle = {
               ? 'text-white/80 hover:bg-white/10 hover:text-gold-bright'
               : 'text-text-secondary hover:bg-black/5 hover:text-text-primary'
           "
-          @click="toggleLang"
-          :title="locale === 'es' ? 'English' : 'Español'"
+          @click="locale.toggle()"
+          :title="locale.locale.value === 'es' ? 'English' : 'Español'"
         >
           <Languages :size="16" />
         </button>

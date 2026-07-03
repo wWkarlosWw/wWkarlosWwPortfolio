@@ -1,0 +1,120 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { useThemeStore } from '@/stores/theme'
+
+const { t } = useI18n()
+const theme = useThemeStore()
+const stats = t('about.stats') as unknown as Array<{ num: string; label: string }>
+
+const FOREST_ABOUT = 'https://images.unsplash.com/photo-1645601594289-b15fa3f14eea?w=900&h=1100&fit=crop&auto=format'
+</script>
+
+<template>
+  <section class="py-28" style="background-color: var(--background)">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-20 items-center">
+        <div class="relative order-2 lg:order-1">
+          <div class="relative overflow-hidden aspect-[3/4] max-w-sm"
+               style="background-color: var(--muted)">
+            <img
+              :src="FOREST_ABOUT"
+              alt="Luz de sol entre árboles del bosque"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute bottom-0 left-0 right-0 h-24"
+              :style="{
+                background: theme.isDark
+                  ? 'linear-gradient(to top, #0f1f18, transparent)'
+                  : 'linear-gradient(to top, #fdfbf7, transparent)',
+              }"
+            />
+          </div>
+          <div
+            class="absolute bottom-8 -right-4 lg:-right-12 p-5"
+            :style="{
+              backgroundColor: 'var(--card)',
+              borderColor: 'var(--border)',
+            }"
+          >
+            <p class="text-3xl font-bold"
+               style="font-family: 'Bebas Neue', sans-serif; color: var(--foreground)">
+              5+
+            </p>
+            <p class="text-xs tracking-wider uppercase mt-1"
+               style="color: var(--muted-foreground)">
+              Años de experiencia
+            </p>
+          </div>
+        </div>
+
+        <div class="order-1 lg:order-2">
+          <p
+            class="text-xs tracking-[0.3em] uppercase mb-4 font-medium"
+            style="color: var(--accent)"
+          >
+            {{ t('about.label') }}
+          </p>
+          <h2 class="text-4xl lg:text-5xl font-bold leading-tight mb-8"
+              style="color: var(--foreground)">
+            {{ t('about.title') }}
+            <br />
+            <em class="italic" style="color: var(--accent)">
+              {{ t('about.titleEm') }}
+            </em>
+          </h2>
+
+          <div class="space-y-6 leading-relaxed font-light"
+               style="color: var(--muted-foreground)">
+            <p v-for="(paragraph, i) in (t('about.paragraphs') as unknown as string[])" :key="i">
+              {{ paragraph }}
+            </p>
+            <p>
+              Mi enfoque va más allá de escribir código limpio. Cada línea que escribo busca resolver un problema real, con la menor fricción posible y la mayor belleza alcanzable. Creo firmemente que el buen diseño no es un lujo, sino una necesidad para construir productos digitales que perduren.
+            </p>
+            <p>
+              Fuera del código, me encuentras explorando senderos en los Cerros Orientales de Bogotá, fotografiando texturas naturales que luego aparecen —sin que nadie lo note— en los fondos de mis interfaces. También escribo sobre la intersección entre tecnología y naturaleza en mi boletín mensual.
+            </p>
+          </div>
+
+          <div class="mt-12 grid grid-cols-3 gap-8">
+            <div
+              v-for="stat in stats"
+              :key="stat.label"
+              class="border-l pl-4"
+              :style="{ borderColor: 'var(--border)' }"
+            >
+              <p class="text-2xl font-bold" style="font-family: 'Bebas Neue', sans-serif; color: var(--accent)">
+                {{ stat.num }}
+              </p>
+              <p class="text-xs tracking-wider uppercase mt-1" style="color: var(--muted-foreground)">
+                {{ stat.label }}
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-12 border-t pt-8"
+               :style="{ borderColor: 'var(--border)' }">
+            <h3 class="text-xl font-bold mb-4" style="color: var(--foreground)">
+              Filosofía de trabajo
+            </h3>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div
+                v-for="item in ['Diseño centrado en el usuario', 'Código sostenible', 'Iteración constante', 'Colaboración abierta']"
+                :key="item"
+                class="flex items-center gap-3 text-sm font-light"
+                :style="{ color: 'var(--muted-foreground)' }"
+              >
+                <span
+                  class="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  :style="{ background: 'var(--accent)' }"
+                />
+                {{ item }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
