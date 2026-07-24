@@ -1,75 +1,76 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import { Sun, Moon, Languages } from '@lucide/vue'
-import { useThemeStore } from '@/stores/theme'
-import { useLocale } from '@/composables/useLocale'
-import woodBg from '@/assets/img/navMadera.jpg'
+import { ref, onMounted, onUnmounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { Sun, Moon, Languages } from "@lucide/vue";
+import { useThemeStore } from "@/stores/theme";
+import { useLocale } from "@/composables/useLocale";
+import woodBg from "@/assets/img/navMadera.jpg";
+import WkLogoIcon from "@/components/ui/WkLogoIcon.vue";
 
-const { t } = useI18n()
-const theme = useThemeStore()
-const locale = useLocale()
+const { t } = useI18n();
+const theme = useThemeStore();
+const locale = useLocale();
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 
-const scrolled = ref(false)
-const mobileMenuOpen = ref(false)
+const scrolled = ref(false);
+const mobileMenuOpen = ref(false);
 
-const navItems = ['home', 'about', 'projects', 'contact'] as const
+const navItems = ["home", "about", "projects", "contact"] as const;
 
 function onScroll() {
-  scrolled.value = window.scrollY > 80
+  scrolled.value = window.scrollY > 80;
 }
 
 function navigateTo(name: string) {
-  const sectionId = name === 'home' ? 'hero' : `${name}-section`
-  const el = document.getElementById(sectionId)
+  const sectionId = name === "home" ? "hero" : `${name}-section`;
+  const el = document.getElementById(sectionId);
   if (el) {
-    el.scrollIntoView({ behavior: 'smooth' })
-    router.push({ name, hash: `#${sectionId}` }).catch(() => {})
+    el.scrollIntoView({ behavior: "smooth" });
+    router.push({ name, hash: `#${sectionId}` }).catch(() => {});
   } else {
-    router.push({ name })
+    router.push({ name });
   }
-  mobileMenuOpen.value = false
+  mobileMenuOpen.value = false;
 }
 
 onMounted(() => {
-  theme.init()
-  locale.init()
-  window.addEventListener('scroll', onScroll, { passive: true })
-})
+  theme.init();
+  locale.init();
+  window.addEventListener("scroll", onScroll, { passive: true });
+});
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll)
-})
+  window.removeEventListener("scroll", onScroll);
+});
 
 const woodGlassStyle = {
   background: `linear-gradient(rgba(40, 25, 15, 0.25), rgba(40, 25, 15, 0.25)), url(${woodBg}) center / 95% auto no-repeat`,
-  backgroundColor: '#4a3525',
-  backdropFilter: 'blur(12px)',
-  WebkitBackdropFilter: 'blur(12px)',
-}
+  backgroundColor: "#4a3525",
+  backdropFilter: "blur(12px)",
+  WebkitBackdropFilter: "blur(12px)",
+};
 </script>
 
 <template>
   <nav
-    class="fixed left-1/2 top-4 z-50 w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 rounded-full transition-all duration-500 ease-out"
+    class="fixed left-1/2 top-4 p-0 z-50 w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2 rounded-full transition-all duration-500 ease-out"
   >
     <div
       class="absolute inset-0 rounded-full shadow-xl shadow-black/25 transition-all duration-500 ease-out"
       :class="scrolled ? 'opacity-100' : 'opacity-0'"
       :style="woodGlassStyle"
     />
-    <div class="relative z-10 flex items-center justify-between gap-6 px-6 py-3">
+    <div class="relative z-10 flex items-center justify-between gap-6 px-6">
       <a
         href="/"
-        class="text-lg font-semibold tracking-tight transition-colors duration-300"
-        :class="scrolled ? 'text-white font-bold' : 'text-text-primary'"
+        class="flex items-center justify-center transition-colors duration-300 size-12 shrink-0 overflow-hidden [&>svg]:size-full [&>svg]:block"
+        :class="scrolled ? 'text-white' : 'text-text-primary'"
         @click.prevent="navigateTo('home')"
       >
-        &lt;Karlos /&gt;
+        <WkLogoIcon />
       </a>
 
       <div class="hidden items-center gap-6 sm:flex">
