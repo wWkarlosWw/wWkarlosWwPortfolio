@@ -1,9 +1,6 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
-  size?: number
-}>(), {
-  size: 48,
-})
+/** Logotipo wWkarlosWw. Hereda el color con `currentColor` y escala con el contenedor. */
+withDefaults(defineProps<{ size?: number | string }>(), { size: '100%' })
 </script>
 
 <template>
@@ -12,8 +9,10 @@ withDefaults(defineProps<{
     viewBox="0 0 1158 784"
     fill="currentColor"
     :width="size"
-    :height="size ? undefined : undefined"
-    :style="size ? `height: auto; aspect-ratio: 1158/784` : undefined"
+    :height="size"
+    preserveAspectRatio="xMidYMid meet"
+    role="img"
+    aria-label="wWkarlosWw"
   >
     <path
       fill-rule="evenodd"
