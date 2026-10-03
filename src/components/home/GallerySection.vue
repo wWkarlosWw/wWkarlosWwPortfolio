@@ -112,17 +112,14 @@ onUnmounted(() => {
       <div
         ref="track"
         class="relative flex items-center gap-8 px-6 will-change-transform lg:gap-14 lg:px-[8vw]"
-        :class="pinned ? '' : 'snap-x snap-mandatory overflow-x-auto pb-6'"
+        :class="pinned ? '' : 'snap-x snap-mandatory scroll-px-6 overflow-x-auto pb-6'"
       >
         <!-- Presentación -->
         <div class="w-[78vw] shrink-0 snap-start sm:w-[24rem] lg:w-[30rem]">
-          <div class="flex items-center gap-3">
-            <span class="block h-px w-8" style="background: linear-gradient(90deg, transparent, var(--accent))" />
-            <p class="eyebrow">{{ t('gallery.label') }}</p>
-          </div>
-          <h2 class="display-lg mt-5 text-balance" style="color: var(--foreground)">
-            {{ t('gallery.title') }}
-            <em class="serif-em">{{ t('gallery.titleEm') }}</em>
+          <p class="eyebrow">{{ t('gallery.label') }}</p>
+          <h2 class="title display-md mt-4 text-balance">
+            <span class="title-sans">{{ t('gallery.title') }}</span>
+            <span class="title-serif">{{ t('gallery.titleEm') }}</span>
           </h2>
           <p class="mt-6 max-w-sm text-base leading-relaxed text-pretty" style="color: var(--muted-foreground)">
             {{ t('gallery.description') }}

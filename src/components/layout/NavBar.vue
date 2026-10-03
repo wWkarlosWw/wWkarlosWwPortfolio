@@ -248,7 +248,7 @@ const ink = computed(() => (open.value ? 'var(--cream)' : 'var(--foreground)'))
       <div
         v-if="open"
         id="site-menu"
-        class="fixed inset-0 z-40 overflow-y-auto"
+        class="fixed inset-0 z-40 overflow-x-hidden overflow-y-auto"
         style="background: var(--forest-900); color: var(--cream)"
         role="dialog"
         aria-modal="true"
@@ -520,7 +520,8 @@ const ink = computed(() => (open.value ? 'var(--cream)' : 'var(--foreground)'))
   font-weight: 800;
   font-stretch: 90%;
   text-transform: uppercase;
-  font-size: clamp(2.5rem, 8.5vh, 6rem);
+  /* Limitado por alto y por ancho: cabe en una pantalla y no desborda en un teléfono */
+  font-size: clamp(2.25rem, min(8.5vh, 13.5vw), 6rem);
   line-height: 0.95;
   letter-spacing: -0.035em;
   color: var(--cream);

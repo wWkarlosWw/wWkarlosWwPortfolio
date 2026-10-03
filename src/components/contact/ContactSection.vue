@@ -74,7 +74,7 @@ withDefaults(defineProps<{ headingLevel?: 1 | 2 }>(), { headingLevel: 2 })
                   {{ t('contact.availabilityLabel') }}
                 </p>
                 <p class="mt-1 text-sm" style="color: var(--foreground)">
-                  {{ t('contact.availabilityValue') }} · {{ profile.timezone }}
+                  {{ t('contact.availabilityValue') }} · <span class="whitespace-nowrap">{{ profile.timezone }}</span>
                 </p>
               </div>
             </div>

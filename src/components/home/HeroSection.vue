@@ -71,9 +71,10 @@ function render() {
 
   // 1 · El lienzo entero se encoge hasta ser una tarjeta, un poco por encima del centro.
   const shrink = easeInOut(span(p, 0.05, 0.6))
-  const target = vw < 768 ? 0.82 : 0.56
+  const mobile = vw < 768
+  const target = mobile ? 0.6 : 0.56
   const scale = 1 - shrink * (1 - target)
-  const lift = -vh * 0.07 * shrink
+  const lift = -vh * (mobile ? 0.11 : 0.07) * shrink
   frame.value.style.transform = `translate3d(0, ${lift}px, 0) scale(${scale})`
   // El radio se compensa con la escala para que en pantalla mida siempre lo mismo.
   frame.value.style.borderRadius = `${(28 * shrink) / scale}px`
@@ -200,12 +201,20 @@ function onPointerMove(e: PointerEvent) {
 function seed(from: { x: number; y: number }, to: { x: number; y: number }) {
   const dist = Math.hypot(to.x - from.x, to.y - from.y)
   const steps = Math.max(1, Math.ceil(dist / 10))
-  const r = 70 + Math.min(dist, 120) * 0.6
+  // El tamaño de la mancha sigue al del lienzo: en un teléfono es más chica.
+  const unit = lensUnit()
+  const r = unit + Math.min(dist, 120) * 0.6 * (unit / 70)
   for (let i = 1; i <= steps; i++) {
     const k = i / steps
     blobs.push({ x: from.x + (to.x - from.x) * k, y: from.y + (to.y - from.y) * k, r, life: 1 })
   }
   if (blobs.length > 400) blobs = blobs.slice(-400)
+}
+
+/** Radio base de la mancha, proporcional al lado corto del lienzo. */
+function lensUnit() {
+  const c = canvas.value
+  return c ? Math.max(42, Math.min(70, Math.min(c.clientWidth, c.clientHeight) * 0.11)) : 70
 }
 
 /*
@@ -264,7 +273,7 @@ function drawTrail(time: number) {
   // Mientras el cursor está dentro, un círculo lo acompaña aunque esté quieto.
   if (cursor) {
     mctx.beginPath()
-    mctx.arc(cursor.x, cursor.y, 64 + Math.sin(time / 500) * 4, 0, Math.PI * 2)
+    mctx.arc(cursor.x, cursor.y, lensUnit() * 0.9 + Math.sin(time / 500) * 4, 0, Math.PI * 2)
     mctx.fill()
   }
 
@@ -299,7 +308,8 @@ function drawCover(g: CanvasRenderingContext2D, img: HTMLImageElement, w: number
 
 onMounted(() => {
   pinned.value = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  trailEnabled = pinned.value && window.matchMedia('(hover: hover) and (pointer: fine)').matches
+  // En táctil no hay cursor que seguir, pero la tinta se pasea sola igual.
+  trailEnabled = pinned.value
 
   if (trailEnabled && canvas.value) {
     ctx = canvas.value.getContext('2d')

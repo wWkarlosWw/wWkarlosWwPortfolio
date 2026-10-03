@@ -16,7 +16,7 @@ const { lang } = useLocalized()
     :to="{ name: 'blog-post', params: { slug: post.slug } }"
     class="group flex flex-col p-7 sm:p-8"
   >
-    <div class="flex items-center gap-3 text-[0.65rem] tracking-[0.18em] uppercase" style="color: var(--muted-foreground)">
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.65rem] tracking-[0.14em] whitespace-nowrap uppercase" style="color: var(--muted-foreground)">
       <time :datetime="post.date">{{ formatDate(post.date, lang) }}</time>
       <span class="size-1 rounded-full" style="background: var(--accent)" />
       <span>{{ post.readingTime }} {{ t('common.minRead') }}</span>

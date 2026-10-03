@@ -131,7 +131,7 @@ const topStack = computed(() =>
                 {{ t('snapshot.locationLabel') }}
               </p>
               <p class="mt-1 text-sm" style="color: var(--foreground)">
-                Cochabamba, Bolivia · {{ profile.timezone }}
+                Cochabamba, Bolivia · <span class="whitespace-nowrap">{{ profile.timezone }}</span>
               </p>
             </div>
           </div>

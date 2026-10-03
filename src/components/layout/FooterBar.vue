@@ -77,7 +77,7 @@ function toTop() {
               </a>
             </li>
             <li class="text-sm" style="color: var(--muted-foreground)">
-              Cochabamba, Bolivia · {{ profile.timezone }}
+              Cochabamba, Bolivia · <span class="whitespace-nowrap">{{ profile.timezone }}</span>
             </li>
           </ul>
 

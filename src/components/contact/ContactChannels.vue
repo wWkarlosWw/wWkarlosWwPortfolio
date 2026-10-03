@@ -41,8 +41,9 @@ const { L } = useLocalized()
           {{ L(channel.label) }}
         </span>
         <span
-          class="mt-1 block text-[0.8rem] leading-snug font-medium transition-colors duration-300 group-hover:text-[color:var(--accent)]"
-          style="overflow-wrap: anywhere; color: var(--foreground)"
+          class="mt-1 block truncate text-[0.72rem] leading-snug font-medium transition-colors duration-300 group-hover:text-[color:var(--em)] sm:text-[0.8rem]"
+          style="color: var(--foreground)"
+          :title="channel.value"
         >
           {{ channel.value }}
         </span>
