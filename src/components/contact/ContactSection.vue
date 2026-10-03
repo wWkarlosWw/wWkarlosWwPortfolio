@@ -2,16 +2,12 @@
 import { useI18n } from 'vue-i18n'
 import { Clock, MapPin } from '@lucide/vue'
 import { profile } from '@/data/profile'
-import RainCanvas from '@/components/ui/RainCanvas.vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
+import AmbientGlow from '@/components/ui/AmbientGlow.vue'
 import ContactChannels from './ContactChannels.vue'
 import ContactForm from './ContactForm.vue'
 
-/**
- * Sección de contacto. La lluvia sobre el estanque es el único momento del
- * sitio con movimiento continuo: cierra el recorrido y hace que el formulario
- * se sienta como un lugar tranquilo donde detenerse.
- */
+/** Sección de contacto: canales directos y formulario, sin adornos que distraigan. */
 const { t } = useI18n()
 
 /**
@@ -23,15 +19,8 @@ withDefaults(defineProps<{ headingLevel?: 1 | 2 }>(), { headingLevel: 2 })
 </script>
 
 <template>
-  <section id="contact" class="section-pad relative overflow-hidden" style="background: var(--surface)">
-    <RainCanvas />
-
-    <!-- Velo que separa la lluvia del texto -->
-    <div
-      class="pointer-events-none absolute inset-0"
-      style="background: radial-gradient(70% 55% at 50% 40%, color-mix(in srgb, var(--surface) 82%, transparent), transparent 75%)"
-    />
-
+  <section id="contact" class="tone-dark section-pad relative overflow-hidden">
+    <AmbientGlow tone="dark" />
     <div class="shell relative z-10">
       <div v-reveal>
         <SectionHeading
@@ -51,7 +40,7 @@ withDefaults(defineProps<{ headingLevel?: 1 | 2 }>(), { headingLevel: 2 })
       </div>
 
       <!-- Formulario -->
-      <div class="mt-20 grid gap-px lg:grid-cols-[1fr_1.3fr]" style="background: var(--border)">
+      <div class="tile-grid mt-20 grid gap-3 lg:grid-cols-[1fr_1.3fr]">
         <!-- Nota lateral -->
         <div
           v-reveal="{ delay: 140 }"
@@ -60,7 +49,7 @@ withDefaults(defineProps<{ headingLevel?: 1 | 2 }>(), { headingLevel: 2 })
         >
           <div>
             <p class="eyebrow">{{ t('contact.responseTitle') }}</p>
-            <p class="mt-4 text-sm font-light leading-relaxed text-pretty" style="color: var(--muted-foreground)">
+            <p class="mt-4 text-sm leading-relaxed text-pretty" style="color: var(--muted-foreground)">
               {{ t('contact.responseText') }}
             </p>
           </div>
@@ -95,7 +84,7 @@ withDefaults(defineProps<{ headingLevel?: 1 | 2 }>(), { headingLevel: 2 })
         <!-- Campos -->
         <div v-reveal="{ delay: 200 }" class="p-8 sm:p-10" style="background: var(--background)">
           <p class="eyebrow">{{ t('contact.formTitle') }}</p>
-          <p class="mt-2 mb-8 text-sm font-light" style="color: var(--muted-foreground)">
+          <p class="mt-2 mb-8 text-sm" style="color: var(--muted-foreground)">
             {{ t('contact.formSubtitle') }}
           </p>
           <ContactForm />

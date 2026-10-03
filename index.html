@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,8 +11,7 @@
       content="Portafolio de Karlos Batista, desarrollador full stack y QA en Cochabamba, Bolivia. Vue, Nuxt, Node, Nest, React Native. Proyectos, experiencia y contacto."
     />
     <meta name="author" content="Karlos Batista Leite Cardozo" />
-    <meta name="theme-color" content="#0d1a14" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#faf8f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#fafaf7" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Karlos Batista — Full Stack Developer &amp; QA" />
@@ -25,32 +24,6 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@wWkarlosWw" />
 
-    <!--
-      Tema antes del primer pintado.
-      Si esto viviera en el bundle de Vue, la página se pintaría con el tema por
-      defecto y luego saltaría al elegido: un destello visible en cada carga.
-    -->
-    <script>
-      (function () {
-        try {
-          var saved = localStorage.getItem('theme')
-          var prefersDark =
-            !window.matchMedia ||
-            window.matchMedia('(prefers-color-scheme: dark)').matches
-          var theme = saved || (prefersDark ? 'dark' : 'light')
-          document.documentElement.setAttribute('data-theme', theme)
-        } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'dark')
-        }
-      })()
-    </script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:wght@300..700&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <div id="app"></div>

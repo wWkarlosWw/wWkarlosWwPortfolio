@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { ArrowLeft } from '@lucide/vue'
 import { findPost, formatDate, postsFor, renderPost } from '@/data/blog'
 import { useLocalized } from '@/composables/useT'
-import ForestBackdrop from '@/components/ui/ForestBackdrop.vue'
+import AmbientGlow from '@/components/ui/AmbientGlow.vue'
 import PostCard from '@/components/blog/PostCard.vue'
 
 const props = defineProps<{ slug: string }>()
@@ -32,8 +32,8 @@ watch(
 <template>
   <article v-if="post">
     <!-- ================= Encabezado ================= -->
-    <header class="relative overflow-hidden pb-16 pt-40" style="background: var(--background)">
-      <ForestBackdrop variant="soft" :intensity="0.7" />
+    <header class="tone-light relative overflow-hidden pb-16 pt-40">
+      <AmbientGlow />
 
       <div class="shell-narrow relative z-10">
         <RouterLink
@@ -63,7 +63,7 @@ watch(
           <span
             v-for="tag in post.tags"
             :key="tag"
-            class="border px-3 py-1.5 text-[0.62rem] tracking-wide"
+            class="rounded-full border px-3 py-1.5 text-[0.62rem] tracking-wide"
             style="border-color: var(--border); color: var(--muted-foreground)"
           >
             {{ tag }}
@@ -82,10 +82,11 @@ watch(
     </div>
 
     <!-- ================= Otras entradas ================= -->
-    <section v-if="others.length" class="section-pad" style="background: var(--surface)">
+    <section v-if="others.length" class="tone-dark section-pad relative overflow-hidden">
+      <AmbientGlow tone="dark" />
       <div class="shell-narrow">
         <p class="eyebrow">{{ t('blog.otherPosts') }}</p>
-        <div class="mt-8 grid gap-px sm:grid-cols-2" style="background: var(--border)">
+        <div class="tile-grid mt-8 grid gap-3 sm:grid-cols-2">
           <PostCard v-for="other in others" :key="other.slug" :post="other" />
         </div>
       </div>
@@ -93,7 +94,7 @@ watch(
   </article>
 
   <!-- ================= Sin resultado ================= -->
-  <section v-else class="flex min-h-[70svh] items-center" style="background: var(--background)">
+  <section v-else class="tone-light flex min-h-[70svh] items-center">
     <div class="shell-narrow text-center">
       <h1 class="display-md" style="color: var(--foreground)">{{ t('blog.notFound') }}</h1>
       <RouterLink :to="{ name: 'about', hash: '#blog' }" class="btn btn-outline mt-8">

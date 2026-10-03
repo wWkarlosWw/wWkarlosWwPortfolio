@@ -4,6 +4,9 @@ import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import NavBar from '@/components/layout/NavBar.vue'
 import FooterBar from '@/components/layout/FooterBar.vue'
+import IntroCurtain from '@/components/ui/IntroCurtain.vue'
+import ScrollProgress from '@/components/ui/ScrollProgress.vue'
+import CustomCursor from '@/components/ui/CustomCursor.vue'
 
 const route = useRoute()
 const { t, locale } = useI18n()
@@ -29,6 +32,10 @@ watch(
   >
     Saltar al contenido
   </a>
+
+  <IntroCurtain />
+  <ScrollProgress />
+  <CustomCursor />
 
   <div class="flex min-h-screen flex-col" style="background: var(--background); color: var(--foreground)">
     <NavBar />

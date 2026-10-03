@@ -7,7 +7,7 @@ const { t } = useI18n()
 const { fields, status, errorFor, touch, submit } = useContactForm()
 
 const inputClass =
-  'w-full border px-4 py-3 text-sm font-light transition-colors duration-300 ' +
+  'w-full rounded-[var(--radius-md)] border px-4 py-3 text-sm transition-colors duration-300 ' +
   'placeholder:opacity-45 focus:outline-none'
 
 const inputStyle = {
@@ -105,7 +105,7 @@ function onBlur(e: FocusEvent, field: 'name' | 'email' | 'subject' | 'message') 
       </p>
     </div>
 
-    <button type="submit" class="btn btn-gold w-full" :disabled="status === 'sending'">
+    <button type="submit" class="btn btn-primary w-full" :disabled="status === 'sending'">
       <template v-if="status === 'sending'">
         <LoaderCircle :size="14" class="animate-spin" />
         {{ t('contact.form.sending') }}
@@ -129,7 +129,7 @@ function onBlur(e: FocusEvent, field: 'name' | 'email' | 'subject' | 'message') 
     >
       <p
         v-if="status === 'sent'"
-        class="flex items-center gap-2 text-sm font-light"
+        class="flex items-center gap-2 text-sm"
         style="color: var(--accent)"
       >
         <CircleCheck :size="14" />
@@ -137,7 +137,7 @@ function onBlur(e: FocusEvent, field: 'name' | 'email' | 'subject' | 'message') 
       </p>
       <p
         v-else-if="status === 'error'"
-        class="flex items-center gap-2 text-sm font-light"
+        class="flex items-center gap-2 text-sm"
         style="color: var(--destructive)"
       >
         <CircleAlert :size="14" />

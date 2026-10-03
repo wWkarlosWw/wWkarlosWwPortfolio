@@ -7,6 +7,11 @@ interface RevealOptions {
   threshold?: number
   /** Repetir la animación cada vez que el elemento vuelve a entrar. */
   repeat?: boolean
+  /**
+   * `fade` sube y aclara el bloque. `image` lo descubre con una cortina que
+   * se abre de abajo arriba mientras la foto se asienta, como un telón.
+   */
+  variant?: 'fade' | 'image'
 }
 
 const observers = new WeakMap<HTMLElement, IntersectionObserver>()
@@ -19,7 +24,8 @@ function parse(binding: DirectiveBinding): RevealOptions {
 /**
  * `v-reveal` — aparición suave al entrar en el viewport.
  *
- * Uso: `v-reveal`, `v-reveal="120"` (retardo) o `v-reveal="{ delay: 200 }"`.
+ * Uso: `v-reveal`, `v-reveal="120"` (retardo), `v-reveal="{ delay: 200 }"`
+ * o `v-reveal="{ variant: 'image' }"` para fotografías.
  * Si el usuario pidió menos movimiento, el elemento se muestra de inmediato.
  */
 export const vReveal: Directive<HTMLElement> = {
@@ -35,7 +41,7 @@ export const vReveal: Directive<HTMLElement> = {
       return
     }
 
-    el.classList.add('reveal-init')
+    el.classList.add(opts.variant === 'image' ? 'reveal-img' : 'reveal-init')
     if (opts.delay) el.style.transitionDelay = `${opts.delay}ms`
 
     const observer = new IntersectionObserver(

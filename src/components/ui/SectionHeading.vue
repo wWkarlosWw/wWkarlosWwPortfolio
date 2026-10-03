@@ -1,5 +1,9 @@
 <script setup lang="ts">
-/** Encabezado de sección: filete dorado, antetítulo, título en serif y bajada. */
+/**
+ * Encabezado de sección en dos voces: antetítulo, una línea en sans gruesa,
+ * otra en serif y la bajada. Es el mismo en todo el sitio, así cada sección
+ * se reconoce como parte de la misma familia.
+ */
 withDefaults(
   defineProps<{
     eyebrow?: string
@@ -7,8 +11,6 @@ withDefaults(
     titleEm?: string
     description?: string
     align?: 'left' | 'center'
-    /** Corta el ancho de la bajada para que no se estire en pantallas anchas. */
-    narrow?: boolean
     /**
      * Nivel del encabezado. Por defecto `h2` porque casi siempre es una sección
      * dentro de una página; el primer encabezado de cada vista pasa `1` para que
@@ -16,39 +18,24 @@ withDefaults(
      */
     level?: 1 | 2 | 3
   }>(),
-  { align: 'left', narrow: true, level: 2 },
+  { align: 'left', level: 2 },
 )
 </script>
 
 <template>
-  <div :class="align === 'center' ? 'text-center' : ''">
-    <div
-      class="flex items-center gap-3"
-      :class="align === 'center' ? 'justify-center' : ''"
-    >
-      <span
-        class="block h-px w-8"
-        style="background: linear-gradient(90deg, transparent, var(--accent))"
-      />
-      <p v-if="eyebrow" class="eyebrow">{{ eyebrow }}</p>
-    </div>
+  <div :class="align === 'center' ? 'flex flex-col items-center text-center' : ''">
+    <p v-if="eyebrow" class="eyebrow">{{ eyebrow }}</p>
 
     <component
       :is="`h${level}`"
-      class="mt-5 text-balance"
-      :class="level === 1 ? 'display-lg' : 'display-md'"
-      style="color: var(--foreground)"
+      class="title mt-4 text-balance"
+      :class="[level === 1 ? 'display-lg' : 'display-md', align === 'center' ? 'items-center' : '']"
     >
-      {{ title }}
-      <em v-if="titleEm" class="serif-em">{{ titleEm }}</em>
+      <span class="title-sans">{{ title.replace(/[,.]$/, '') }}</span>
+      <span v-if="titleEm" class="title-serif">{{ titleEm }}</span>
     </component>
 
-    <p
-      v-if="description"
-      class="mt-6 text-base font-light leading-relaxed text-pretty"
-      :class="[narrow ? 'max-w-xl' : '', align === 'center' ? 'mx-auto' : '']"
-      style="color: var(--muted-foreground)"
-    >
+    <p v-if="description" class="lead mt-6 max-w-xl text-pretty">
       {{ description }}
     </p>
   </div>

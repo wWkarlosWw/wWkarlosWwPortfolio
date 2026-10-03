@@ -12,25 +12,25 @@ export const experience: ExperienceEntry[] = [
     location: 'Cochabamba, Bolivia',
     period: { es: 'Jul 2025 — Jun 2026', en: 'Jul 2025 — Jun 2026' },
     description: {
-      es: 'Participé en todo el ciclo de vida del desarrollo bajo metodologías ágiles: creé y mantuve nuevas funcionalidades web y colaboré en la arquitectura general del sistema.',
-      en: 'I took part in the full software development lifecycle under agile methodologies: building and maintaining new web features and contributing to the overall system architecture.',
+      es: 'Estuve en todo el proceso: hice y mantuve funcionalidades nuevas de la web y ayudé a decidir cómo se armaba el sistema. Trabajábamos con metodologías ágiles.',
+      en: 'I was there for the whole process: I built and maintained new web features and helped decide how the system was put together. We worked with agile methods.',
     },
     achievements: [
       {
-        es: 'Construí la aplicación móvil de la empresa con React Native, manteniendo alta fidelidad respecto a los diseños de UI/UX.',
-        en: 'Built the company mobile app in React Native, keeping high fidelity to the UI/UX designs.',
+        es: 'Hice la app móvil de la empresa con React Native, respetando los diseños de UI/UX al detalle.',
+        en: 'I built the company mobile app in React Native, sticking closely to the UI/UX designs.',
       },
       {
-        es: 'Propuse ajustes de interfaz por iniciativa propia que fueron revisados y aprobados por el equipo de producto.',
-        en: 'Proactively proposed interface adjustments that were reviewed and approved by the product team.',
+        es: 'Propuse cambios de interfaz por mi cuenta; el equipo de producto los revisó y los aprobó.',
+        en: 'I suggested interface changes on my own; the product team reviewed and approved them.',
       },
       {
-        es: 'Aseguré la calidad del código mediante pruebas unitarias y el monitoreo continuo de los pipelines de CI/CD.',
-        en: 'Safeguarded code quality through unit testing and continuous monitoring of the CI/CD pipelines.',
+        es: 'Cuidé la calidad del código con pruebas unitarias y revisando los pipelines de CI/CD.',
+        en: 'I looked after code quality with unit tests and by keeping an eye on the CI/CD pipelines.',
       },
       {
-        es: 'Gestioné mi carga de trabajo en Jira y mantuve comunicación técnica constante con los supervisores.',
-        en: 'Managed my workload in Jira and kept steady technical communication with supervisors.',
+        es: 'Organicé mis tareas en Jira y mantuve al tanto a mis supervisores.',
+        en: 'I organised my tasks in Jira and kept my supervisors in the loop.',
       },
     ],
     tags: ['Vue.js', 'Nuxt', 'Node.js', 'Nest.js', 'React Native', 'Figma', 'Jira', 'CI/CD'],
@@ -46,17 +46,17 @@ export const experience: ExperienceEntry[] = [
     period: { es: '2023 — Presente', en: '2023 — Present' },
     current: true,
     description: {
-      es: 'Participé en varias competencias de programación organizadas por mi universidad, poniendo a prueba lógica, resolución de problemas bajo presión y trabajo en equipo.',
-      en: 'I competed in several programming contests hosted by my university, testing logic, problem-solving under pressure and teamwork.',
+      es: 'Compito en los concursos de programación de mi universidad. Ahí se pone a prueba la lógica, resolver bajo presión y trabajar en equipo.',
+      en: "I compete in my university's programming contests. They test your logic, solving under pressure and working as a team.",
     },
     achievements: [
       {
-        es: 'Resolución de retos algorítmicos con tiempo limitado, en equipos de dos a tres personas.',
-        en: 'Solved time-boxed algorithmic challenges in teams of two to three people.',
+        es: 'Resolvemos retos de algoritmos contra reloj, en equipos de dos o tres.',
+        en: 'We solve algorithm challenges against the clock, in teams of two or three.',
       },
       {
-        es: 'Rol frecuente de coordinación: repartir el problema, integrar las partes y revisar antes de enviar.',
-        en: 'Frequent coordination role: splitting the problem, integrating the parts and reviewing before submitting.',
+        es: 'Casi siempre me toca coordinar: repartir el problema, juntar las partes y revisar antes de enviar.',
+        en: 'I usually end up coordinating: splitting the problem, putting the parts together and reviewing before we submit.',
       },
     ],
     tags: ['Algoritmos', 'C++', 'Python', 'Trabajo en equipo'],

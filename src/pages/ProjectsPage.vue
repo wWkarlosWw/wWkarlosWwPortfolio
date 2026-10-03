@@ -4,12 +4,11 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ArrowRight } from '@lucide/vue'
 import { kindBlurbs, kindLabels, projectKinds, projects } from '@/data/projects'
-import type { Project, ProjectKind } from '@/data/types'
+import type { ProjectKind } from '@/data/types'
 import { useLocalized } from '@/composables/useT'
-import ForestBackdrop from '@/components/ui/ForestBackdrop.vue'
+import AmbientGlow from '@/components/ui/AmbientGlow.vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
-import ProjectCard from '@/components/sections/ProjectCard.vue'
-import ProjectDetail from '@/components/sections/ProjectDetail.vue'
+import ProjectGrid from '@/components/projects/ProjectGrid.vue'
 
 /**
  * Todo el trabajo en una sola vista, con el filtro por tipo en la URL.
@@ -24,7 +23,6 @@ const router = useRouter()
 type Filter = ProjectKind | 'all'
 
 const filter = ref<Filter>('all')
-const selected = ref<Project | null>(null)
 
 function isKind(value: unknown): value is ProjectKind {
   return typeof value === 'string' && (projectKinds as string[]).includes(value)
@@ -72,57 +70,44 @@ const tabs = computed<Array<{ key: Filter; label: string }>>(() => [
 
 <template>
   <div>
-    <!-- ================= Encabezado ================= -->
-    <section class="relative overflow-hidden pb-16 pt-40" style="background: var(--background)">
-      <ForestBackdrop variant="soft" :intensity="0.8" />
+    <!-- ================= Encabezado y vitrina ================= -->
+    <section class="tone-dark relative overflow-hidden pb-28 pt-36 sm:pt-44">
+      <AmbientGlow tone="dark" :intensity="0.7" />
 
-      <div class="shell relative z-10">
-        <div v-reveal>
+      <div class="shell-wide relative z-10">
+        <div v-reveal class="grid gap-8 lg:grid-cols-2 lg:items-end">
           <SectionHeading
             :eyebrow="t('projects.label')"
             :title="t('projects.title')"
             :title-em="t('projects.titleEm')"
-            :description="t('projects.description')"
             :level="1"
           />
 
-          <!-- Recuento: da escala al listado antes de entrar en las pestañas -->
-          <p class="mt-8 flex items-baseline gap-2 text-xs tracking-[0.16em] uppercase" style="color: var(--muted-foreground)">
-            <span class="numeric text-3xl leading-none" style="color: var(--accent)">
-              {{ projects.length }}
-            </span>
-            {{ t('projects.summary', { kinds: projectKinds.length }) }}
-          </p>
-        </div>
-      </div>
-    </section>
+          <div class="lg:pb-3">
+            <p class="lead max-w-md text-pretty">{{ t('projects.description') }}</p>
 
-    <!-- ================= Filtros y rejilla ================= -->
-    <section class="pb-28" style="background: var(--background)">
-      <div class="shell">
-        <!-- Pestañas -->
-        <div
-          v-reveal
-          class="flex flex-wrap items-center gap-x-2 gap-y-3 border-y py-4"
-          style="border-color: var(--border)"
-        >
+            <!-- Recuento: da escala al listado antes de entrar en los filtros -->
+            <p class="mt-6 flex items-baseline gap-3 text-xs tracking-[0.16em] uppercase" style="color: var(--muted-foreground)">
+              <span class="numeric text-4xl leading-none" style="color: var(--accent)">
+                {{ projects.length }}
+              </span>
+              {{ t('projects.summary', { kinds: projectKinds.length }) }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <div v-reveal class="mt-14 flex flex-wrap items-center gap-2">
           <button
             v-for="tab in tabs"
             :key="tab.key"
-            class="group relative cursor-pointer px-4 py-2 text-xs font-medium tracking-[0.14em] uppercase transition-colors duration-300"
-            :style="{
-              color: filter === tab.key ? 'var(--accent)' : 'var(--muted-foreground)',
-            }"
+            class="filter-pill cursor-pointer"
+            :class="{ 'is-active': filter === tab.key }"
             :aria-pressed="filter === tab.key"
             @click="setFilter(tab.key)"
           >
             {{ tab.label }}
-            <sup class="ml-1 text-[0.6rem] opacity-70">{{ counts[tab.key] }}</sup>
-            <span
-              class="absolute inset-x-2 -bottom-px h-px origin-left transition-transform duration-400"
-              :class="filter === tab.key ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"
-              style="background: var(--accent)"
-            />
+            <span class="numeric opacity-60">{{ counts[tab.key] }}</span>
           </button>
         </div>
 
@@ -137,61 +122,61 @@ const tabs = computed<Array<{ key: Filter; label: string }>>(() => [
           <p
             v-if="activeBlurb"
             :key="filter"
-            class="mt-6 max-w-xl font-display text-xl leading-snug"
+            class="mt-6 max-w-xl font-display text-2xl leading-snug italic"
             style="color: var(--muted-foreground)"
           >
             {{ activeBlurb }}
           </p>
         </Transition>
 
-        <!-- Rejilla -->
-        <TransitionGroup
-          tag="div"
-          class="mt-12 grid gap-px sm:grid-cols-2 lg:grid-cols-3"
-          style="background: var(--border)"
-          enter-active-class="transition duration-500 ease-out"
-          enter-from-class="opacity-0 translate-y-4"
-          leave-active-class="absolute transition duration-200 ease-in"
-          leave-to-class="opacity-0 scale-95"
-          move-class="transition duration-500 ease-out"
-        >
-          <ProjectCard
-            v-for="(project, i) in visible"
-            :key="project.slug"
-            :project="project"
+        <!-- Vitrina: la `key` la vuelve a montar para que el filtro reanime las fichas -->
+        <ProjectGrid :key="filter" :projects="visible" class="mt-12" />
 
-            @open="selected = $event"
-          />
-        </TransitionGroup>
-
-        <p
-          v-if="!visible.length"
-          class="mt-12 text-sm font-light"
-          style="color: var(--muted-foreground)"
-        >
-          {{ t('projects.empty') }}
-        </p>
-
-        <!-- Llamada final -->
-        <div
-          v-reveal
-          class="mt-20 flex flex-col items-center gap-6 border-t pt-14 text-center"
-          style="border-color: var(--border)"
-        >
-          <h3 class="font-display text-3xl text-balance" style="color: var(--foreground)">
-            {{ t('projects.ctaTitle') }}
-          </h3>
-          <p class="max-w-md text-sm font-light leading-relaxed" style="color: var(--muted-foreground)">
-            {{ t('projects.ctaText') }}
-          </p>
-          <RouterLink :to="{ name: 'contact' }" class="btn btn-gold">
-            {{ t('hero.ctaContact') }}
-            <ArrowRight :size="14" />
-          </RouterLink>
-        </div>
+        <p v-if="!visible.length" class="lead mt-12">{{ t('projects.empty') }}</p>
       </div>
     </section>
 
-    <ProjectDetail :project="selected" @close="selected = null" />
+    <!-- ================= Llamada final ================= -->
+    <section class="tone-light section-pad">
+      <div v-reveal class="shell flex flex-col items-center gap-6 text-center">
+        <h2 class="title display-md items-center text-balance">
+          <span class="title-serif">{{ t('projects.ctaTitle') }}</span>
+        </h2>
+        <p class="lead max-w-md">{{ t('projects.ctaText') }}</p>
+        <RouterLink v-magnetic :to="{ name: 'contact' }" class="btn btn-primary">
+          {{ t('hero.ctaContact') }}
+          <ArrowRight :size="14" />
+        </RouterLink>
+      </div>
+    </section>
   </div>
 </template>
+
+<style scoped>
+.filter-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  transition:
+    color 0.3s var(--ease-out-soft),
+    border-color 0.3s var(--ease-out-soft),
+    background-color 0.3s var(--ease-out-soft);
+}
+.filter-pill:hover {
+  color: var(--foreground);
+  border-color: var(--border-strong);
+}
+.filter-pill.is-active {
+  background: var(--foreground);
+  border-color: var(--foreground);
+  color: var(--background);
+}
+</style>

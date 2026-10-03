@@ -11,7 +11,7 @@ const { L } = useLocalized()
 </script>
 
 <template>
-  <div class="grid gap-px" :class="columns === 2 ? 'sm:grid-cols-2' : ''" style="background: var(--border)">
+  <div class="tile-grid grid gap-3" :class="columns === 2 ? 'sm:grid-cols-2' : ''">
     <a
       v-for="(channel, i) in contactChannels"
       :key="channel.key"
@@ -25,7 +25,7 @@ const { L } = useLocalized()
       @mouseleave="(e) => ((e.currentTarget as HTMLElement).style.background = 'var(--card)')"
     >
       <span
-        class="flex size-11 shrink-0 items-center justify-center border transition-all duration-400 group-hover:scale-105"
+        class="flex size-11 shrink-0 items-center justify-center rounded-full border transition-all duration-400 group-hover:scale-105"
         style="border-color: var(--border-strong); color: var(--accent)"
       >
         <Mail v-if="channel.icon === 'mail'" :size="16" />

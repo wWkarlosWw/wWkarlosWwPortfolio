@@ -3,7 +3,7 @@ import { useI18n } from 'vue-i18n'
 import { skillGroups, softSkills, toolbelt } from '@/data/skills'
 import { languages } from '@/data/profile'
 import { useLocalized } from '@/composables/useT'
-import ForestBackdrop from '@/components/ui/ForestBackdrop.vue'
+import AmbientGlow from '@/components/ui/AmbientGlow.vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 
 const { t } = useI18n()
@@ -11,8 +11,8 @@ const { L } = useLocalized()
 </script>
 
 <template>
-  <section id="stack" class="section-pad relative overflow-hidden" style="background: var(--surface)">
-    <ForestBackdrop variant="soft" :intensity="0.7" />
+  <section id="stack" class="tone-forest section-pad relative overflow-hidden">
+    <AmbientGlow tone="forest" />
 
     <div class="shell relative z-10">
       <div v-reveal>
@@ -22,14 +22,12 @@ const { L } = useLocalized()
           :title-em="t('skills.titleEm')"
           :description="t('skills.description')"
           align="center"
-          :narrow="true"
         />
       </div>
 
       <!-- Rejilla de grupos -->
       <div
-        class="mt-16 grid gap-px sm:grid-cols-2 lg:grid-cols-3"
-        style="background: var(--border)"
+        class="tile-grid mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
       >
         <div
           v-for="(group, i) in skillGroups"
@@ -56,7 +54,7 @@ const { L } = useLocalized()
             <li
               v-for="item in group.items"
               :key="item"
-              class="flex items-center gap-3 text-sm font-light"
+              class="flex items-center gap-3 text-sm"
               style="color: var(--muted-foreground)"
             >
               <span class="size-1 shrink-0 rotate-45" style="background: var(--accent)" />
@@ -67,14 +65,14 @@ const { L } = useLocalized()
       </div>
 
       <!-- Herramientas + idiomas + habilidades blandas -->
-      <div class="mt-px grid gap-px lg:grid-cols-[1.4fr_1fr]" style="background: var(--border)">
+      <div class="tile-grid mt-3 grid gap-3 lg:grid-cols-[1.4fr_1fr]">
         <div v-reveal="{ delay: 120 }" class="p-8 sm:p-10" style="background: var(--background)">
           <p class="eyebrow">{{ t('skills.toolsLabel') }}</p>
           <div class="mt-6 flex flex-wrap gap-2">
             <span
               v-for="tool in toolbelt"
               :key="tool"
-              class="cursor-default border px-4 py-2 text-[0.68rem] font-medium tracking-[0.14em] uppercase transition-all duration-300 hover:-translate-y-0.5"
+              class="cursor-default rounded-full border px-4 py-2 text-[0.68rem] font-medium tracking-[0.14em] uppercase transition-all duration-300 hover:-translate-y-0.5"
               style="border-color: var(--border); color: var(--muted-foreground)"
               @mouseenter="(e) => {
                 const el = e.currentTarget as HTMLElement
@@ -96,7 +94,7 @@ const { L } = useLocalized()
             <div
               v-for="skill in softSkills"
               :key="skill.es"
-              class="flex items-center gap-3 text-sm font-light"
+              class="flex items-center gap-3 text-sm"
               style="color: var(--muted-foreground)"
             >
               <span class="size-1.5 shrink-0 rounded-full" style="background: var(--accent)" />

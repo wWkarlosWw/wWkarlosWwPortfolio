@@ -20,7 +20,7 @@ const posts = computed(() => postsFor(lang.value).slice(0, 3))
 </script>
 
 <template>
-  <section v-if="posts.length" id="notes" class="section-pad" style="background: var(--surface)">
+  <section v-if="posts.length" id="notes" class="tone-light section-pad">
     <div class="shell">
       <div v-reveal class="flex flex-wrap items-end justify-between gap-8">
         <SectionHeading
@@ -40,7 +40,7 @@ const posts = computed(() => postsFor(lang.value).slice(0, 3))
         </RouterLink>
       </div>
 
-      <div class="mt-16 grid gap-px md:grid-cols-2 lg:grid-cols-3" style="background: var(--border)">
+      <div class="tile-grid mt-16 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         <div v-for="(post, i) in posts" :key="post.slug" v-reveal="{ delay: i * 90 }" class="flex">
           <PostCard :post="post" class="w-full" />
         </div>

@@ -66,7 +66,7 @@ const entries = computed(() =>
         {{ item.org }} · {{ item.location }}
       </p>
 
-      <p class="mt-4 max-w-2xl text-sm font-light leading-relaxed text-pretty" style="color: var(--muted-foreground)">
+      <p class="mt-4 max-w-2xl text-sm leading-relaxed text-pretty" style="color: var(--muted-foreground)">
         {{ L(item.description) }}
       </p>
 
@@ -74,7 +74,7 @@ const entries = computed(() =>
         <li
           v-for="(achievement, j) in item.achievements"
           :key="j"
-          class="flex gap-3 text-sm font-light leading-relaxed"
+          class="flex gap-3 text-sm leading-relaxed"
           style="color: var(--muted-foreground)"
         >
           <span class="mt-2 size-1.5 shrink-0 rotate-45" style="background: var(--accent)" />
@@ -86,7 +86,7 @@ const entries = computed(() =>
         <span
           v-for="tag in item.tags"
           :key="tag"
-          class="border px-2.5 py-1 text-[0.62rem] tracking-wide"
+          class="rounded-full border px-2.5 py-1 text-[0.62rem] tracking-wide"
           style="border-color: var(--border); color: var(--muted-foreground)"
         >
           {{ tag }}

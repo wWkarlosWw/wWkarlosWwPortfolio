@@ -1,61 +1,45 @@
 @import "tailwindcss";
 
-/* Permite usar utilidades `dark:` con el atributo data-theme del store */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+/* Tipografías servidas desde el propio sitio: sin peticiones a terceros */
+@import "@fontsource-variable/mona-sans/wdth.css";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
 
 /* ============================================================
-   TEMA CLARO — "claro del bosque"
-   Fondo crema, letra negra, detalles verdes con toques dorados.
+   PALETA — un solo modo, por secciones
+   El blanco y el negro mandan; el verde viste detalles y algunos
+   fondos; el dorado queda para los detalles más pequeños.
+
+   Cada sección elige su tono con una clase (`tone-light`,
+   `tone-dark`, `tone-forest`). La clase redefine las variables, así
+   que todo lo que hay dentro se adapta sin tocar los componentes.
    ============================================================ */
 :root {
-  --background: #faf8f2;
-  --surface: #f2efe6;
-  --card: #ffffff;
-  --foreground: #14201a;
-  --muted-foreground: #5a6b60;
-
-  --primary: #1c4535;
-  --primary-foreground: #faf8f2;
-  --secondary: #eef1e9;
-  --secondary-foreground: #1c4535;
-  --muted: #e9ece3;
-
-  --accent: #a8801f;
-  --accent-soft: #c9a94a;
-  --accent-foreground: #14201a;
-  --on-accent: #14201a;
-
-  --destructive: #a63a2b;
-  --border: rgba(28, 69, 53, 0.14);
-  --border-strong: rgba(28, 69, 53, 0.28);
-  --input-background: #ffffff;
-  --ring: #a8801f;
-
-  --radius: 2px;
-
-  /* Paleta cruda (no cambia entre temas) */
-  --forest-900: #0d1a14;
-  --forest-800: #12241c;
-  --forest-700: #1c4535;
-  --forest-600: #2a5a49;
-  --forest-500: #3d7a5f;
-  --forest-400: #6b9e83;
+  /* Paleta cruda (no cambia entre tonos) */
+  --paper: #f6f5f0;
+  --paper-2: #eceae3;
+  --ink: #0e100f;
+  --ink-2: #151816;
+  --ink-3: #1d211e;
+  --forest-900: #0d1f17;
+  --forest-800: #133023;
+  --forest-700: #1b4433;
+  --forest-600: #275c46;
+  --forest-500: #3a7a5d;
+  --forest-400: #6aa588;
+  --forest-300: #8fd6ae;
   --gold-700: #8a6a18;
   --gold-600: #a8801f;
   --gold-500: #d4af37;
-  --gold-400: #e8c65b;
+  --gold-400: #e2c063;
   --gold-300: #f0d99a;
   --wood-900: #2b1c11;
   --wood-700: #4a3525;
   --wood-500: #6b4e37;
-  --cream: #faf8f2;
-  --ink: #14201a;
+  --cream: #f4f3ef;
 
-  /* Sombras cálidas, nunca negro puro */
-  --shadow-sm: 0 1px 2px rgba(28, 69, 53, 0.06), 0 2px 8px rgba(28, 69, 53, 0.04);
-  --shadow-md: 0 4px 14px rgba(28, 69, 53, 0.08), 0 12px 32px rgba(28, 69, 53, 0.06);
-  --shadow-lg: 0 12px 40px rgba(28, 69, 53, 0.12), 0 32px 72px rgba(28, 69, 53, 0.08);
-  --glow-accent: 0 0 0 1px rgba(168, 128, 31, 0.25);
+  /* Esquinas suaves, como piedra de río: tarjetas, fotos y paneles */
+  --radius: 18px;
 
   /* Motion */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -66,39 +50,102 @@
   color-scheme: light;
 }
 
-/* ============================================================
-   TEMA OSCURO — "bosque profundo"
-   Verde oscuro, texturas de madera, letra blanca, detalles dorados.
-   ============================================================ */
-[data-theme="dark"] {
-  --background: #0d1a14;
-  --surface: #12241c;
-  --card: #162c22;
-  --foreground: #f5f1e8;
-  --muted-foreground: #9db3a4;
+/* --- Tono claro: papel blanco y tinta negra (por defecto) ------------- */
+:root,
+.tone-light {
+  --background: var(--paper);
+  --surface: var(--paper-2);
+  --card: rgba(255, 255, 255, 0.78);
+  --foreground: var(--ink);
+  --muted-foreground: #5c605d;
+  --muted: #e6e5df;
 
-  --primary: #e8c65b;
-  --primary-foreground: #0d1a14;
-  --secondary: #12241c;
-  --secondary-foreground: #f5f1e8;
-  --muted: #1a3227;
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  /* Verde para el énfasis; dorado para el detalle mínimo */
+  --em: var(--forest-600);
+  --accent: var(--gold-600);
+  --accent-soft: var(--gold-500);
+  --on-accent: var(--ink);
 
-  --accent: #e8c65b;
-  --accent-foreground: #0d1a14;
-  --on-accent: #0d1a14;
+  --destructive: #a63a2b;
+  --border: rgba(14, 16, 15, 0.12);
+  --border-strong: rgba(14, 16, 15, 0.28);
+  --input-background: rgba(255, 255, 255, 0.7);
+  --ring: var(--forest-600);
 
-  --destructive: #d4574a;
-  --border: rgba(232, 198, 91, 0.16);
-  --border-strong: rgba(232, 198, 91, 0.34);
-  --input-background: rgba(255, 255, 255, 0.03);
-  --ring: #e8c65b;
+  --shadow-sm: 0 1px 2px rgba(11, 12, 11, 0.05), 0 2px 8px rgba(11, 12, 11, 0.04);
+  --shadow-md: 0 4px 14px rgba(11, 12, 11, 0.07), 0 12px 32px rgba(11, 12, 11, 0.05);
+  --shadow-lg: 0 12px 40px rgba(11, 12, 11, 0.1), 0 32px 72px rgba(11, 12, 11, 0.07);
+  --glow-accent: 0 0 0 1px rgba(39, 92, 70, 0.25);
+}
+
+/* --- Tono oscuro: negro profundo, como modo nocturno ------------------ */
+.tone-dark {
+  --background: var(--ink);
+  --surface: var(--ink-2);
+  --card: rgba(255, 255, 255, 0.055);
+  --foreground: var(--cream);
+  --muted-foreground: #a3a8a4;
+  --muted: var(--ink-3);
+
+  --primary: var(--cream);
+  --primary-foreground: var(--ink);
+  --em: var(--forest-300);
+  --accent: var(--gold-400);
+  --accent-soft: var(--gold-300);
+  --on-accent: var(--ink);
+
+  --destructive: #e0695b;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.26);
+  --input-background: rgba(255, 255, 255, 0.04);
+  --ring: var(--forest-300);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45), 0 12px 32px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5), 0 32px 72px rgba(0, 0, 0, 0.4);
-  --glow-accent: 0 0 24px rgba(232, 198, 91, 0.18);
-
+  --glow-accent: 0 0 24px rgba(169, 209, 187, 0.16);
   color-scheme: dark;
+}
+
+/* --- Tono bosque: verde elegante para fondos puntuales ---------------- */
+.tone-forest {
+  --background: var(--forest-800);
+  --surface: var(--forest-900);
+  --card: rgba(255, 255, 255, 0.06);
+  --foreground: var(--cream);
+  --muted-foreground: #a7bdb1;
+  --muted: var(--forest-700);
+
+  --primary: var(--cream);
+  --primary-foreground: var(--forest-900);
+  --em: var(--gold-300);
+  --accent: var(--gold-400);
+  --accent-soft: var(--gold-300);
+  --on-accent: var(--ink);
+
+  --destructive: #e0695b;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.26);
+  --input-background: rgba(255, 255, 255, 0.05);
+  --ring: var(--gold-300);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.45), 0 32px 72px rgba(0, 0, 0, 0.35);
+  --glow-accent: 0 0 24px rgba(226, 192, 99, 0.18);
+  color-scheme: dark;
+}
+
+/* En `base` para que una utilidad (p. ej. `bg-transparent`) pueda pisarlo */
+@layer base {
+  .tone-light,
+  .tone-dark,
+  .tone-forest {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
 }
 
 @theme inline {
@@ -126,6 +173,7 @@
   --color-forest-600: var(--forest-600);
   --color-forest-500: var(--forest-500);
   --color-forest-400: var(--forest-400);
+  --color-forest-300: var(--forest-300);
   --color-gold-700: var(--gold-700);
   --color-gold-600: var(--gold-600);
   --color-gold-500: var(--gold-500);
@@ -136,18 +184,18 @@
   --color-wood-500: var(--wood-500);
   --color-cream: var(--cream);
   --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-em: var(--em);
 
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
 
-  --font-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-numeric: "Bebas Neue", "Inter", sans-serif;
+  /* Serif de exhibición para títulos y énfasis; sans variable para todo lo demás */
+  --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Mona Sans Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  --shadow-soft: var(--shadow-sm);
-  --shadow-card: var(--shadow-md);
-  --shadow-float: var(--shadow-lg);
 }
 
 @layer base {
@@ -158,6 +206,8 @@
   }
 
   html {
+    /* Tamaño base fluido: en monitores anchos todo crece en proporción, no se queda pequeño */
+    font-size: clamp(100%, 0.5vw + 0.5rem, 137.5%);
     scroll-behavior: smooth;
     scroll-padding-top: var(--nav-h);
     -webkit-text-size-adjust: 100%;
@@ -167,7 +217,8 @@
     font-family: var(--font-sans);
     background-color: var(--background);
     color: var(--foreground);
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-size: 1rem;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -176,8 +227,8 @@
   h1, h2, h3 {
     font-family: var(--font-display);
     font-weight: 400;
-    letter-spacing: -0.015em;
-    line-height: 1.08;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
   }
 
   h4, h5, h6 {
@@ -194,46 +245,85 @@
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 8px;
   }
 
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: var(--surface); }
   ::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--accent) 45%, transparent);
+    background: color-mix(in srgb, var(--foreground) 30%, transparent);
     border: 3px solid var(--surface);
     border-radius: 6px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: color-mix(in srgb, var(--accent) 75%, transparent);
+    background: color-mix(in srgb, var(--foreground) 50%, transparent);
   }
 
   img { max-width: 100%; }
 }
 
 @layer components {
-  /* --- Tipografía de apoyo ------------------------------------ */
+  /* --- Tipografía ------------------------------------------------ */
+  /*
+   * Escala del sitio. Los títulos de sección van en dos voces, como un cartel:
+   * una línea en sans gruesa y otra en serif, las dos en mayúsculas.
+   */
   .eyebrow {
     font-size: 0.6875rem;
-    letter-spacing: 0.32em;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--accent);
   }
 
-  .display-xl { font-size: clamp(3rem, 9vw, 7rem); }
-  .display-lg { font-size: clamp(2.5rem, 6.5vw, 4.75rem); }
-  .display-md { font-size: clamp(2rem, 4.5vw, 3.25rem); }
+  .title {
+    display: flex;
+    flex-direction: column;
+    text-transform: uppercase;
+    line-height: 0.9;
+    color: var(--foreground);
+  }
+  .title-sans {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-stretch: 90%;
+    letter-spacing: -0.03em;
+  }
+  .title-serif {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    /* La serif es más baja de ojo: se compensa para que las dos líneas pesen igual */
+    font-size: 1.12em;
+    line-height: 0.86;
+    color: var(--em);
+  }
+
+  .display-xl { font-size: clamp(3.25rem, 9vw, 8rem); }
+  .display-lg { font-size: clamp(2.75rem, 6.5vw, 5.5rem); }
+  .display-md { font-size: clamp(2.25rem, 4.6vw, 3.75rem); }
+
+  .lead {
+    font-size: clamp(1rem, 1.25vw, 1.125rem);
+    line-height: 1.65;
+    font-weight: 400;
+    color: var(--muted-foreground);
+  }
 
   .serif-em {
+    font-family: var(--font-display);
     font-style: italic;
-    color: var(--accent);
-    font-weight: 300;
+    font-weight: 400;
+    color: var(--em);
   }
 
+  /* Cifras: la sans en su ancho más estrecho, como un marcador */
   .numeric {
-    font-family: var(--font-numeric);
-    letter-spacing: 0.02em;
+    font-family: var(--font-sans);
+    font-stretch: 75%;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
   }
 
   /* --- Botones ------------------------------------------------- */
@@ -245,10 +335,10 @@
     gap: 0.625rem;
     padding: 0.9rem 2rem;
     font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    border-radius: var(--radius);
+    border-radius: 9999px;
     cursor: pointer;
     overflow: hidden;
     transition: transform 0.4s var(--ease-out-soft),
@@ -260,23 +350,35 @@
   .btn:hover { transform: translateY(-2px); }
   .btn:active { transform: translateY(0); }
 
-  .btn-gold {
-    background: linear-gradient(135deg, var(--gold-400), var(--gold-500) 55%, var(--gold-600));
-    color: var(--ink);
+  /* Principal: tinta sobre papel, papel sobre tinta. Siempre contrasta con su sección. */
+  .btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
     box-shadow: var(--shadow-sm);
   }
-  .btn-gold:hover { box-shadow: var(--shadow-md), var(--glow-accent); }
+  .btn-primary:hover { box-shadow: var(--shadow-md), var(--glow-accent); }
+
+  /* Verde: la llamada de marca, como el botón de la barra */
+  .btn-green {
+    background: var(--forest-600);
+    color: var(--paper);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-green:hover { background: var(--forest-700); box-shadow: var(--shadow-md); }
+
   /* Barrido de luz al pasar el cursor */
-  .btn-gold::after {
+  .btn-primary::after,
+  .btn-green::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
     transform: translateX(-120%);
     transition: transform 0.75s var(--ease-out-soft);
     z-index: -1;
   }
-  .btn-gold:hover::after { transform: translateX(120%); }
+  .btn-primary:hover::after,
+  .btn-green:hover::after { transform: translateX(120%); }
 
   .btn-outline {
     border: 1px solid var(--border-strong);
@@ -284,80 +386,38 @@
     background: transparent;
   }
   .btn-outline:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--em);
+    color: var(--em);
     box-shadow: var(--shadow-sm);
   }
 
-  .btn-solid {
-    background: var(--primary);
-    color: var(--primary-foreground);
-  }
-  .btn-solid:hover { box-shadow: var(--shadow-md); }
-
   /* --- Superficies --------------------------------------------- */
-  .card-surface {
-    background: var(--card);
+  /*
+   * Rejilla de tarjetas: cada hijo directo es una tarjeta redondeada con su
+   * borde. Sustituye a las antiguas rejillas de filete de un pixel.
+   */
+  /*
+   * Las tarjetas son de vidrio: fondo translúcido y desenfoque de lo que
+   * queda detrás. Pisa el fondo opaco que cada celda trae en línea.
+   */
+  .tile-grid > * {
+    background: var(--card) !important;
+    backdrop-filter: blur(22px) saturate(1.4);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: border-color 0.45s var(--ease-out-soft),
-                box-shadow 0.45s var(--ease-out-soft),
-                transform 0.45s var(--ease-out-soft);
+    overflow: hidden;
+    transition: border-color 0.45s var(--ease-out-soft), box-shadow 0.45s var(--ease-out-soft);
   }
-  .card-surface:hover {
+  .tile-grid > *:hover {
     border-color: var(--border-strong);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
   }
-
-  /* Vidrio: madera tenue en oscuro, crema translúcida en claro */
-  .glass {
-    background: color-mix(in srgb, var(--background) 72%, transparent);
-    backdrop-filter: blur(16px) saturate(1.4);
-    -webkit-backdrop-filter: blur(16px) saturate(1.4);
-    border: 1px solid var(--border);
-  }
-
-  /* --- Texturas ------------------------------------------------- */
-  /* Veta de madera procedural — solo visible en tema oscuro */
-  .wood-grain {
-    position: relative;
-    background-color: var(--wood-700);
-    background-image:
-      repeating-linear-gradient(92deg,
-        rgba(0, 0, 0, 0.16) 0px, rgba(0, 0, 0, 0.16) 1px,
-        transparent 1px, transparent 5px,
-        rgba(255, 220, 170, 0.05) 5px, rgba(255, 220, 170, 0.05) 6px,
-        transparent 6px, transparent 13px),
-      repeating-linear-gradient(88.5deg,
-        rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 2px,
-        transparent 2px, transparent 23px),
-      linear-gradient(115deg, var(--wood-900), var(--wood-500) 45%, var(--wood-700));
-  }
-
-  /* Puntitos orgánicos, muy sutiles, para romper planos grandes */
-  .grain-overlay::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.5;
-    background-image: radial-gradient(circle at 1px 1px,
-      color-mix(in srgb, var(--foreground) 12%, transparent) 1px, transparent 0);
-    background-size: 4px 4px;
-    mix-blend-mode: overlay;
-  }
-
 
   /* Filo dorado de un pixel: el detalle que da el aire elegante */
   .gold-rule {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0.6;
-  }
-
-  .gold-rule-v {
-    width: 1px;
-    background: linear-gradient(180deg, transparent, var(--accent), transparent);
     opacity: 0.6;
   }
 
@@ -385,6 +445,7 @@
 
   /* --- Contenedores -------------------------------------------- */
   .shell { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: 1.5rem; }
+  .shell-wide { width: 100%; max-width: 100rem; margin-inline: auto; padding-inline: clamp(1rem, 2.5vw, 2.5rem); }
   .shell-narrow { width: 100%; max-width: 52rem; margin-inline: auto; padding-inline: 1.5rem; }
   .section-pad { padding-block: clamp(5rem, 11vw, 9rem); }
 }
@@ -407,91 +468,28 @@
     filter: blur(0);
   }
 
+  /* --- Revelado de fotografías (v-reveal="{ variant: 'image' }") -- */
+  /*
+   * La cortina se abre de abajo arriba y la foto se asienta desde más cerca.
+   * El recorte va en el hijo, no en el elemento observado: un elemento con
+   * `clip-path` cerrado tiene área visible cero y el IntersectionObserver
+   * nunca lo daría por visible.
+   */
+  .reveal-img > * {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1.3s var(--ease-in-out-soft);
+    transition-delay: inherit;
+  }
+  .reveal-img img {
+    transform: scale(1.25);
+    transition: transform 1.8s var(--ease-out-soft), clip-path 1.3s var(--ease-in-out-soft);
+    transition-delay: inherit;
+  }
+  .reveal-img.reveal-in > * { clip-path: inset(0 0 0 0); }
+  .reveal-img.reveal-in img { transform: scale(1); }
+
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
-}
-
-/* ============================================================
-   Cambio de tema
-   ============================================================ */
-
-/*
- * La clase `theme-switching` la pone el store durante 700 ms al cambiar de
- * tema. Solo entonces todo el documento interpola sus colores, así el resto
- * del tiempo no arrastramos transiciones que no usamos.
- *
- * Va envuelta en `:where()` para pesar cero en especificidad: cualquier
- * componente que ya defina su propia transición la conserva. `[data-anim]`
- * marca además las capas del héroe, que animan opacidad y escala aparte.
- */
-:where(html.theme-switching *:not([data-anim])),
-:where(html.theme-switching *:not([data-anim]))::before,
-:where(html.theme-switching *:not([data-anim]))::after {
-  transition:
-    background-color 0.7s var(--ease-out-soft),
-    border-color 0.7s var(--ease-out-soft),
-    color 0.7s var(--ease-out-soft),
-    fill 0.7s var(--ease-out-soft),
-    stroke 0.7s var(--ease-out-soft),
-    box-shadow 0.7s var(--ease-out-soft);
-  transition-delay: 0ms;
-}
-
-/* Capas de fotografía del héroe: fundido cruzado entre bosque claro y oscuro */
-.hero-layer {
-  position: absolute;
-  inset: 0;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  will-change: opacity, transform;
-  transition:
-    opacity 1s var(--ease-out-soft),
-    transform 1.6s var(--ease-out-soft);
-}
-
-/* Velos de color del héroe, uno por tema, cruzados con la misma cadencia */
-.hero-veil {
-  position: absolute;
-  inset: 0;
-  transition: opacity 1s var(--ease-out-soft);
-}
-
-/*
- * Destello que nace bajo el botón de tema y recorre el héroe. Se monta solo
- * durante la animación, con `key` distinta cada vez para reiniciarla.
- */
-.theme-bloom {
-  position: absolute;
-  left: var(--theme-x, 50%);
-  top: var(--theme-y, 12%);
-  z-index: 5;
-  width: 180vmax;
-  height: 180vmax;
-  margin-left: -90vmax;
-  margin-top: -90vmax;
-  border-radius: 9999px;
-  pointer-events: none;
-  /* En claro el dorado se superpone sin blanquear; en oscuro sí queremos que ilumine. */
-  mix-blend-mode: normal;
-  opacity: 0;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--accent) 55%, transparent) 0%,
-    color-mix(in srgb, var(--accent) 18%, transparent) 26%,
-    transparent 58%
-  );
-  animation: theme-bloom 1.1s var(--ease-out-soft) forwards;
-}
-
-[data-theme="dark"] .theme-bloom {
-  mix-blend-mode: screen;
-}
-
-@keyframes theme-bloom {
-  0%   { opacity: 0;    transform: scale(0.04); }
-  22%  { opacity: 0.7; }
-  100% { opacity: 0;    transform: scale(1); }
 }
 
 /* ============================================================
@@ -503,19 +501,44 @@
   50%      { transform: rotate(3deg) translateY(-6px); }
 }
 
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-12px); }
-}
-
-@keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: none; }
+}
+
+/* --- Texto partido letra a letra (SplitText.vue) ------------------ */
+/*
+ * Cada palabra es una ventana con `overflow: hidden` y cada letra sube desde
+ * debajo de su borde. El relleno inferior evita recortar descendentes e
+ * itálicas; el margen negativo lo compensa para no mover la línea base.
+ */
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 0.04em 0.14em;
+  margin: 0 -0.04em -0.14em;
+  vertical-align: top;
+}
+.split-char {
+  display: inline-block;
+  transform: translateY(115%) rotate(6deg);
+  transform-origin: 0 100%;
+  animation: char-rise 1.1s var(--ease-out-soft) both;
+}
+
+@keyframes char-rise {
+  to { transform: none; }
+}
+
+/* --- Telón de entrada (IntroCurtain.vue) ---------------------------- */
+@keyframes logo-draw {
+  from { clip-path: inset(100% 0 0 0); opacity: 0.2; }
+  to   { clip-path: inset(0 0 0 0);    opacity: 1; }
+}
+
+@keyframes curtain-lift {
+  from { clip-path: inset(0 0 0 0); }
+  to   { clip-path: inset(0 0 100% 0); }
 }
 
 /* ============================================================
@@ -537,4 +560,12 @@
     transform: none;
     filter: none;
   }
+
+  .reveal-img > *,
+  .reveal-img img {
+    clip-path: none;
+    transform: none;
+  }
+
+  .split-char { transform: none; }
 }

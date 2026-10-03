@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Minus, Plus } from '@lucide/vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
-import ContactSection from '@/components/sections/ContactSection.vue'
+import ContactSection from '@/components/contact/ContactSection.vue'
 
 /**
  * Vista de contacto: el mismo bloque del inicio —formulario, canales directos
@@ -23,12 +23,12 @@ function toggle(n: number) {
 </script>
 
 <template>
-  <div class="pt-24">
+  <div>
     <!-- El encabezado de la sección hace de h1 de la página -->
-    <ContactSection :heading-level="1" />
+    <ContactSection :heading-level="1" class="!pt-40" />
 
     <!-- ================= Preguntas frecuentes ================= -->
-    <section class="section-pad" style="background: var(--background)">
+    <section class="tone-light section-pad">
       <div class="shell-narrow">
         <div v-reveal>
           <SectionHeading
@@ -39,7 +39,7 @@ function toggle(n: number) {
           />
         </div>
 
-        <dl v-reveal="{ delay: 120 }" class="mt-16 space-y-px" style="background: var(--border)">
+        <dl v-reveal="{ delay: 120 }" class="tile-grid mt-16 flex flex-col gap-3">
           <div v-for="n in faqs" :key="n" style="background: var(--background)">
             <dt>
               <button
@@ -75,7 +75,7 @@ function toggle(n: number) {
             >
               <div class="overflow-hidden">
                 <p
-                  class="px-6 pb-7 text-sm font-light leading-[1.85] text-pretty sm:px-8"
+                  class="px-6 pb-7 text-sm leading-[1.85] text-pretty sm:px-8"
                   style="color: var(--muted-foreground)"
                 >
                   {{ t(`contact.faq.a${n}`) }}

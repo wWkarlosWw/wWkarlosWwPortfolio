@@ -5,8 +5,9 @@ import { ArrowUpRight, Briefcase, GraduationCap, MapPin, Sprout } from '@lucide/
 import { profile } from '@/data/profile'
 import { projects, projectsByKind } from '@/data/projects'
 import { skillGroups } from '@/data/skills'
-import ForestBackdrop from '@/components/ui/ForestBackdrop.vue'
+import AmbientGlow from '@/components/ui/AmbientGlow.vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
+import CountUp from '@/components/ui/CountUp.vue'
 
 /**
  * "De un vistazo": el resumen que pide la portada. Cada cifra sale de los
@@ -39,8 +40,8 @@ const topStack = computed(() =>
 </script>
 
 <template>
-  <section id="snapshot" class="section-pad relative overflow-hidden" style="background: var(--surface)">
-    <ForestBackdrop variant="soft" :intensity="0.55" />
+  <section id="snapshot" class="tone-dark section-pad relative overflow-hidden">
+    <AmbientGlow tone="dark" />
 
     <div class="shell relative z-10">
       <div v-reveal>
@@ -55,8 +56,7 @@ const topStack = computed(() =>
       <!-- Cifras -->
       <div
         v-reveal="{ delay: 100 }"
-        class="mt-16 grid gap-px sm:grid-cols-2 lg:grid-cols-4"
-        style="background: var(--border)"
+        class="tile-grid mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
       >
         <div
           v-for="(stat, i) in stats"
@@ -70,7 +70,7 @@ const topStack = computed(() =>
             style="background: var(--accent)"
           />
           <p class="numeric text-5xl leading-none" style="color: var(--accent)">
-            {{ stat.value }}
+            <CountUp :value="stat.value" />
           </p>
           <p
             class="mt-3 text-[0.68rem] tracking-[0.2em] uppercase"
@@ -82,7 +82,7 @@ const topStack = computed(() =>
       </div>
 
       <!-- Bloques de contexto -->
-      <div class="mt-px grid gap-px lg:grid-cols-[1.5fr_1fr]" style="background: var(--border)">
+      <div class="tile-grid mt-3 grid gap-3 lg:grid-cols-[1.5fr_1fr]">
         <!-- Ahora mismo -->
         <div v-reveal="{ delay: 160 }" class="p-8 sm:p-10" style="background: var(--background)">
           <div class="flex items-center gap-3">
@@ -101,7 +101,7 @@ const topStack = computed(() =>
             <span
               v-for="tech in topStack"
               :key="tech"
-              class="border px-3 py-1.5 text-[0.68rem] tracking-wider uppercase transition-colors duration-300 hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
+              class="rounded-full border px-3 py-1.5 text-[0.68rem] tracking-wider uppercase transition-colors duration-300 hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
               style="border-color: var(--border); color: var(--muted-foreground)"
             >
               {{ tech }}

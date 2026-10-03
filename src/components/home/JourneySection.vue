@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { ArrowRight } from '@lucide/vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
-import ExperienceTimeline from '@/components/sections/ExperienceTimeline.vue'
+import ExperienceTimeline from '@/components/about/ExperienceTimeline.vue'
 
 /**
  * Trayectoria resumida para el inicio.
@@ -15,7 +15,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <section id="journey" class="section-pad" style="background: var(--background)">
+  <section id="journey" class="tone-light section-pad">
     <div class="shell grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
       <div v-reveal class="lg:sticky lg:top-32 lg:self-start">
         <SectionHeading
