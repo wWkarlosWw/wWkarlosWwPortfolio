@@ -8,10 +8,10 @@ import { useLocalized } from '@/composables/useT'
 /**
  * "Fuera del código": un recorrido horizontal por fotos personales.
  *
- * En escritorio la sección se queda fija y el scroll vertical desplaza la fila
- * de fotos hacia la izquierda; cada foto se mueve un poco más lento que su
- * marco, lo que da profundidad. En móvil o con menos movimiento es una fila
- * normal con desplazamiento lateral y ajuste por foto.
+ * La sección se queda fija y el scroll vertical desplaza la fila de fotos hacia
+ * la izquierda, igual en escritorio que en móvil; cada foto se mueve un poco
+ * más lento que su marco, lo que da profundidad. Solo con menos movimiento es
+ * una fila normal con desplazamiento lateral y ajuste por foto.
  */
 const { t } = useI18n()
 const { L } = useLocalized()
@@ -24,7 +24,6 @@ const progress = ref(0)
 
 let distance = 0
 let ticking = false
-let mql: MediaQueryList | undefined
 
 function measure() {
   if (!pinned.value || !track.value) {
@@ -60,20 +59,9 @@ function onScroll() {
   requestAnimationFrame(update)
 }
 
-function setMode() {
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  pinned.value = !!mql?.matches && !reduced
-  if (!pinned.value && track.value) {
-    track.value.style.transform = ''
-    track.value.querySelectorAll<HTMLElement>('[data-parallax]').forEach((img) => (img.style.transform = ''))
-  }
-  nextTick(measure)
-}
-
 onMounted(() => {
-  mql = window.matchMedia('(min-width: 1024px)')
-  mql.addEventListener('change', setMode)
-  setMode()
+  pinned.value = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  nextTick(measure)
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', measure, { passive: true })
   // Las fotos cambian el ancho de la fila al cargar.
@@ -81,7 +69,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  mql?.removeEventListener('change', setMode)
   window.removeEventListener('scroll', onScroll)
   window.removeEventListener('resize', measure)
 })

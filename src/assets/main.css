@@ -206,8 +206,6 @@
   }
 
   html {
-    /* Nada se desplaza de lado, tampoco en navegadores que ignoran el `hidden` del body */
-    overflow-x: clip;
     /* Tamaño base fluido: en monitores anchos todo crece en proporción, no se queda pequeño */
     font-size: clamp(100%, 0.5vw + 0.5rem, 137.5%);
     scroll-behavior: smooth;
@@ -223,6 +221,11 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /*
+     * El recorte lateral va solo aquí. Ponerlo también en `html` convierte al
+     * body en contenedor de scroll y deja sin efecto todo `position: sticky`
+     * (el héroe y la galería dejan de fijarse).
+     */
     overflow-x: hidden;
   }
 
